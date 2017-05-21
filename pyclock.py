@@ -6,7 +6,7 @@ from time import strftime
 from argparse import ArgumentParser
 from ast import literal_eval
 
-try:    from ConfigParser import RawConfigParser
+try:    from configparser import RawConfigParser
 except: from configparser import RawConfigParser
 
 __program__ = 'PyClock'
@@ -314,7 +314,7 @@ def init_args():
                         help='do not auto scale display', dest='auto_scale')
     parser.add_argument('-a', '--auto-scale', action='store_true', default=True,
                         help='auto scale display', dest='auto_scale')
-    parser.add_argument('-k', '--color', type=int, default=PyClock.kDEFAULT_COLOR, choices=range(256),
+    parser.add_argument('-k', '--color', type=int, default=PyClock.kDEFAULT_COLOR, choices=list(range(256)),
                         help='color 0-255 (default: %(default)s)', metavar='COLOR')
     parser.add_argument('-f', '--format', type=str, default=PyClock.kDEFAULT_FORMAT,
                         help='time format (default:%(default)s)', dest='format')
@@ -329,7 +329,7 @@ def init_args():
     settings = dict(config.items("Settings")) if config.has_section('Settings') else {}
 
     # fix values that might not be stored correctly (i.e bools)
-    for i, item in settings.items(): settings[i] = literal_eval(item)
+    for i, item in list(settings.items()): settings[i] = literal_eval(item)
     parser.set_defaults(**settings)
 
     return parser.parse_args()

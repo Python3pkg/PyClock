@@ -39,7 +39,7 @@ with open(script_name) as f:
 
     # keep these
     meta_keys = ['name', 'description', 'version', 'license', 'url', 'author', 'author_email']
-    meta = dict([m for m in meta.items() if m[0] in meta_keys])
+    meta = dict([m for m in list(meta.items()) if m[0] in meta_keys])
 
 setup_d = dict(
     long_description=open('README.rst').read(),
